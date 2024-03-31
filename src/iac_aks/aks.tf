@@ -6,15 +6,11 @@ resource "azurerm_resource_group" "rg" {
 }
 
 
-resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
-  prefix = "dns"
-}
-
 resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.rg.location
   name                = "example-cluster"
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
+  dns_prefix          = "geralexgr-aks"
 
   # Enable OIDC issuer and workload identity
   oidc_issuer_enabled       = true
