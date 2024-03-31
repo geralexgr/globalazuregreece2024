@@ -24,6 +24,7 @@ stages:
         backendServiceArm: 'MVP'
         backendAzureRmStorageAccountName: 'test'
         backendAzureRmContainerName: 'test'
+        backendAzureRmKey: 'test'
     - task: TerraformTaskV4@4
       displayName: terraform apply
       inputs:
