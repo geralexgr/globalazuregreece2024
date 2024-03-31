@@ -38,7 +38,27 @@ stages:
   displayName: Deploy service connection for Azure DevOps
   jobs:
   - job: deploy_serviceconnection
-    displayName: display name for job1
+    displayName: terraform service connection creation
     steps:
-    - script: echo job1.task1
-      displayName: running job1.task1
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        backendServiceArm: 'MVP'
+        backendAzureRmResourceGroupName: 'test'
+        backendAzureRmStorageAccountName: 'test'
+        backendAzureRmContainerName: 'test'
+        backendAzureRmKey: 'test'
+    - task: TerraformTaskV4@4
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        environmentServiceNameAzureRM: 'MVP'
