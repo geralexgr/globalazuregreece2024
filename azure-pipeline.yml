@@ -34,16 +34,11 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
         environmentServiceNameAzureRM: 'MVP'
 
-- stage: stage2
-  displayName: display name for your stage
+- stage: deploy_azuredevops
+  displayName: Deploy service connection for Azure DevOps
   jobs:
-  - job: job1
+  - job: deploy_serviceconnection
     displayName: display name for job1
     steps:
     - script: echo job1.task1
       displayName: running job1.task1
-  - job: job2
-    displayName: display name for job2
-    steps:
-    - script: echo job2.task1
-      displayName: running job2.task1
