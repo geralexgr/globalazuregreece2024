@@ -1,6 +1,3 @@
-# Make sure to set the following environment variables:
-#   AZDO_PERSONAL_ACCESS_TOKEN
-#   AZDO_ORG_SERVICE_URL
 terraform {
   required_providers {
     azuredevops = {
@@ -10,72 +7,22 @@ terraform {
   }
 }
 
-resource "azuredevops_project" "example" {
-  name               = "Example Project"
-  visibility         = "private"
-  version_control    = "Git"
-  work_item_template = "Agile"
-  description        = "Managed by Terraform"
+data "azuredevops_project" "project" {
+  name = "GlobalAzureGreece 2024"
 }
 
 resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
-  project_id            = azuredevops_project.example.id
-  service_endpoint_name = "Example Kubernetes"
-  apiserver_url         = "https://sample-kubernetes-cluster.hcp.westeurope.azmk8s.io"
+  project_id            = data.azuredevops_project.project.id
+  service_endpoint_name = "Example-AKS"
+  apiserver_url         = "https://dns-calm-grub-dja0mgha.hcp.westeurope.azmk8s.io"
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
-    subscription_id   = "00000000-0000-0000-0000-000000000000"
-    subscription_name = "Example"
-    tenant_id         = "00000000-0000-0000-0000-000000000000"
+    subscription_id   = "43709a15-a023-45e7-90a6-e30c5ffad83e"
+    subscription_name = "MVP"
+    tenant_id         = "4e6a568f-34d9-43a6-9c1f-32f6619147fd"
     resourcegroup_id  = "example-rg"
     namespace         = "default"
-    cluster_name      = "example-aks"
-  }
-}
-
-resource "azuredevops_serviceendpoint_kubernetes" "example-kubeconfig" {
-  project_id            = azuredevops_project.example.id
-  service_endpoint_name = "Example Kubernetes"
-  apiserver_url         = "https://sample-kubernetes-cluster.hcp.westeurope.azmk8s.io"
-  authorization_type    = "Kubeconfig"
-
-  kubeconfig {
-    kube_config            = <<EOT
-                              apiVersion: v1
-                              clusters:
-                              - cluster:
-                                  certificate-authority: fake-ca-file
-                                  server: https://1.2.3.4
-                                name: development
-                              contexts:
-                              - context:
-                                  cluster: development
-                                  namespace: frontend
-                                  user: developer
-                                name: dev-frontend
-                              current-context: dev-frontend
-                              kind: Config
-                              preferences: {}
-                              users:
-                              - name: developer
-                                user:
-                                  client-certificate: fake-cert-file
-                                  client-key: fake-key-file
-                             EOT
-    accept_untrusted_certs = true
-    cluster_context        = "dev-frontend"
-  }
-}
-
-resource "azuredevops_serviceendpoint_kubernetes" "example-service-account" {
-  project_id            = azuredevops_project.example.id
-  service_endpoint_name = "Example Kubernetes"
-  apiserver_url         = "https://sample-kubernetes-cluster.hcp.westeurope.azmk8s.io"
-  authorization_type    = "ServiceAccount"
-
-  service_account {
-    token   = "000000000000000000000000"
-    ca_cert = "0000000000000000000000000000000"
+    cluster_name      = "example-cluster"
   }
 }
