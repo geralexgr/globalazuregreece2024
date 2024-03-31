@@ -3,8 +3,35 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+
 stages:
-- stage: stage1
+- stage: deploy_aks
+  displayName: Deploy AKS cluster
+  jobs:
+  - job: terraform_aks_job
+    displayName: terraform AKS
+    steps:
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
+        backendServiceArm: 'MVP'
+        backendAzureRmStorageAccountName: 'test'
+        backendAzureRmContainerName: 'test'
+    - task: TerraformTaskV4@4
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
+
+- stage: stage2
   displayName: display name for your stage
   jobs:
   - job: job1
