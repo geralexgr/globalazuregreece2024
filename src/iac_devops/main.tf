@@ -4,7 +4,17 @@ terraform {
       source = "microsoft/azuredevops"
       version = ">=0.1.0"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.9"
+    }
   }
+}
+
+
+data "azurerm_kubernetes_cluster" "cluster" {
+  name                = "geralexgr-cluster"
+  resource_group_name = "example-rg"
 }
 
 data "azuredevops_project" "project" {
@@ -14,7 +24,7 @@ data "azuredevops_project" "project" {
 resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
   project_id            = data.azuredevops_project.project.id
   service_endpoint_name = "Example-AKS"
-  apiserver_url         = "https://geralexgr-aks.hcp.westeurope.azmk8s.io"
+  apiserver_url         = data.azurerm_kubernetes_cluster.cluster.fqdn
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
