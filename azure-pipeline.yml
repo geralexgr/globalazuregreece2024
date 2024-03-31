@@ -22,6 +22,7 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
         backendServiceArm: 'MVP'
+        backendAzureRmResourceGroupName: 'test'
         backendAzureRmStorageAccountName: 'test'
         backendAzureRmContainerName: 'test'
         backendAzureRmKey: 'test'
