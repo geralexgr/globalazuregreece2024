@@ -2,7 +2,7 @@ trigger:
 - none
 
 variables:
-  library: azuredevops
+  - group: azuredevops
 
 pool:
   vmImage: ubuntu-latest
