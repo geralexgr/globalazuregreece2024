@@ -13,3 +13,8 @@ In this demo a kubernetes application is deployed only with one click. Everythin
 - The AKS cluster is deployed through terraform on Azure
 - The service connection is created using the terraform provider for Azure DevOps
 - The application is deployed through the pipeline code and the previous components that are created.
+
+
+## Links
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs  
+https://registry.terraform.io/providers/microsoft/azuredevops/latest/docs  
