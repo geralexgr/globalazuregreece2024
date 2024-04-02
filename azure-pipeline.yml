@@ -47,9 +47,7 @@ stages:
       displayName: export env variables
       inputs:
         targetType: 'inline'
-        script: |
-          # Write your commands here
-          
+        script: |          
           export $(PAT)
           export $(URL)
     - task: TerraformInstaller@1
