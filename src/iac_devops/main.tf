@@ -44,6 +44,6 @@ resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
     tenant_id         = "4e6a568f-34d9-43a6-9c1f-32f6619147fd"
     resourcegroup_id  = "example-rg"
     namespace         = "default"
-    cluster_name      = "example-cluster"
+    cluster_name      = "geralexgr-cluster"
   }
 }
