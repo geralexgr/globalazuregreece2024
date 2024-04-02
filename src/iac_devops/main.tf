@@ -33,7 +33,9 @@ data "azuredevops_project" "project" {
 resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
   project_id            = data.azuredevops_project.project.id
   service_endpoint_name = "Example-AKS"
-  apiserver_url         = data.azurerm_kubernetes_cluster.cluster.fqdn
+  #apiserver_url         = data.azurerm_kubernetes_cluster.cluster.fqdn
+  apiserver_url =       "geralexgr-aks-jcdup2mz.hcp.westeurope.azmk8s.io"
+
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
