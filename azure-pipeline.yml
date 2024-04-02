@@ -48,8 +48,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: |          
-          export $(PAT)
-          export $(URL)
+          export AZDO_PERSONAL_ACCESS_TOKEN=$(PAT)
+          export AZDO_ORG_SERVICE_URL=$(URL)
     - task: TerraformInstaller@1
       displayName: terraform install
       inputs:
