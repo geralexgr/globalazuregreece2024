@@ -18,7 +18,7 @@ provider "azurerm" {
 
 provider "azuredevops" {
   org_service_url = "https://dev.azure.com/gealexiou/"
-  use_msi = true
+  personal_access_token ="ddfjk6zmlnckqo5j7yuemvw7hcnwc4kumnro2irsx46eupfw6oka"
 }
 
 data "azurerm_kubernetes_cluster" "cluster" {
