@@ -1,6 +1,9 @@
 trigger:
 - none
 
+variables:
+  library: azuredevops
+
 pool:
   vmImage: ubuntu-latest
 
@@ -40,6 +43,15 @@ stages:
   - job: deploy_serviceconnection
     displayName: terraform service connection creation
     steps:
+    - task: Bash@3
+      displayName: export env variables
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          export $(PAT)
+          export $(URL)
     - task: TerraformInstaller@1
       displayName: terraform install
       inputs:
