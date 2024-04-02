@@ -90,8 +90,7 @@ stages:
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configurationType: 'inline'
-        inline: '$(Build.SourcesDirectory)/code/nginx.yml'
+        configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
     # - task: Kubernetes@1
