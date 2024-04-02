@@ -82,15 +82,26 @@ stages:
   - job: deploy_application
     displayName: deploy nginx on aks
     steps:
-
     - task: Kubernetes@1
       displayName: create a nginx deployment with kubectl commands
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'Example-AKS'
-        namespace: 'nginx'
+        namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
+        configurationType: 'inline'
+        inline: '$(Build.SourcesDirectory)/code/nginx.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+    # - task: Kubernetes@1
+    #   displayName: create a nginx deployment with kubectl commands
+    #   inputs:
+    #     connectionType: 'Kubernetes Service Connection'
+    #     kubernetesServiceEndpoint: 'Example-AKS'
+    #     namespace: 'nginx'
+    #     command: 'apply'
+    #     useConfigurationFile: true
+    #     configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
+    #     secretType: 'dockerRegistry'
+    #     containerRegistryType: 'Azure Container Registry'
