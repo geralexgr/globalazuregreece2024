@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod-with-labels
+  name: nginx-globalazure-pod
   labels:
     tier: web
     target: dev
