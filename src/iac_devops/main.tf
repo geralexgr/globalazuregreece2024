@@ -16,6 +16,10 @@ provider "azurerm" {
   features {}
 }
 
+provider "azuredevops" {
+  org_service_url = "https://dev.azure.com/gealexiou/"
+}
+
 data "azurerm_kubernetes_cluster" "cluster" {
   name                = "geralexgr-cluster"
   resource_group_name = "example-rg"
