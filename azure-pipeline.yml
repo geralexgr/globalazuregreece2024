@@ -3,7 +3,9 @@ trigger:
 
 variables:
   - group: azuredevops
-
+  
+  - name: k8s
+    value: 'Example-AKS'
 pool:
   vmImage: ubuntu-latest
 
@@ -86,7 +88,7 @@ stages:
       displayName: create a nginx deployment with kubectl commands
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'Example-AKS'
+        kubernetesServiceEndpoint: $(k8s)
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
