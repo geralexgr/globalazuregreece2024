@@ -34,7 +34,7 @@ resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
   project_id            = data.azuredevops_project.project.id
   service_endpoint_name = "Example-AKS"
   apiserver_url         = data.azurerm_kubernetes_cluster.cluster.kube_config[0].host
-
+  authorize_pilelines   = true
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
