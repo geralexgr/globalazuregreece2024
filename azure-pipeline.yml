@@ -50,6 +50,9 @@ stages:
         script: |          
           export AZDO_PERSONAL_ACCESS_TOKEN=$(PAT)
           export AZDO_ORG_SERVICE_URL=$(URL)
+
+    - script: echo $(System.AccessToken) | az devops login
+      displayName: 'Login to DevOps'
     - task: TerraformInstaller@1
       displayName: terraform install
       inputs:
@@ -72,3 +75,4 @@ stages:
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
         environmentServiceNameAzureRM: 'MVP'
+     
