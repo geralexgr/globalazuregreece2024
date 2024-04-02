@@ -18,6 +18,7 @@ provider "azurerm" {
 
 provider "azuredevops" {
   org_service_url = "https://dev.azure.com/gealexiou/"
+  use_msi = true
 }
 
 data "azurerm_kubernetes_cluster" "cluster" {
