@@ -1,14 +1,9 @@
 
 resources:
   pipelines:
-  - pipeline: application-deployment 
+  - pipeline: application-deployment
     source: "infrastructure-deployment"
-    trigger: 
-      branches:  
-        include: 
-        - init
-        exclude: 
-        - develop
+
 
 pool:
   vmImage: ubuntu-latest
