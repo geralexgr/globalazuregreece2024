@@ -30,11 +30,10 @@ data "azuredevops_project" "project" {
   name = "GlobalAzureGreece 2024"
 }
 
-resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
+resource "azuredevops_serviceendpoint_kubernetes" "aks" {
   project_id            = data.azuredevops_project.project.id
   service_endpoint_name = "Example-AKS"
   apiserver_url         = data.azurerm_kubernetes_cluster.cluster.kube_config[0].host
-  authorize_pilelines   = true
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
@@ -45,4 +44,11 @@ resource "azuredevops_serviceendpoint_kubernetes" "example-azure" {
     namespace         = "default"
     cluster_name      = "geralexgr-cluster"
   }
+}
+
+
+resource "azuredevops_resource_authorization" "authorization" {
+  project_id  = azuredevops_project.project.id
+  resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
+  authorized  = true
 }
