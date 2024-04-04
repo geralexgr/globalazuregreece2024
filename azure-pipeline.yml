@@ -116,7 +116,7 @@ stages:
         script: |
           $connectionToken="$(PAT)"
           $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($connectionToken)"))
-          $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=2.0"
+          $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=7.2-preview.1"
           
           
           $Result = Invoke-RestMethod -Uri $URL -Headers @{authorization = "Basic $base64AuthInfo"} -Method Post -ContentType "application/json"
