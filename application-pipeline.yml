@@ -1,7 +1,15 @@
 pool:
   vmImage: ubuntu-latest
 
-trigger: none
+resources:
+ pipelines:
+   - pipeline: DoesNotMatter
+     source: "infra-pipeline"
+     trigger:
+      branches:
+       include:
+         - init
+
 
 stages:
 - stage: deploy_application
