@@ -22,7 +22,6 @@ stages:
     steps:
     - task: Kubernetes@1
       displayName: create a nginx deployment with kubectl commands
-      retryCountOnTaskFailure: 2
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'Example-AKS'
