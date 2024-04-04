@@ -46,57 +46,40 @@ stages:
 #         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
 #         environmentServiceNameAzureRM: 'MVP'
 
-# - stage: deploy_azuredevops
-#   displayName: Deploy service connection for Azure DevOps
-#   jobs:
-#   - job: deploy_serviceconnection
-#     displayName: terraform service connection creation
-#     steps:
-#     - task: TerraformInstaller@1
-#       displayName: terraform install
-#       inputs:
-#         terraformVersion: 'latest'
-#     - task: TerraformTaskV4@4
-#       displayName: terraform init
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'init'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
-#         backendServiceArm: 'MVP'
-#         backendAzureRmResourceGroupName: 'test'
-#         backendAzureRmStorageAccountName: 'test'
-#         backendAzureRmContainerName: 'test'
-#         backendAzureRmKey: 'test'
-#     - task: TerraformTaskV4@4
-#       displayName: terraform apply
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'apply'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
-#         environmentServiceNameAzureRM: 'MVP'
+- stage: deploy_azuredevops
+  displayName: Deploy service connection for Azure DevOps
+  jobs:
+  - job: deploy_serviceconnection
+    displayName: terraform service connection creation
+    steps:
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        backendServiceArm: 'MVP'
+        backendAzureRmResourceGroupName: 'test'
+        backendAzureRmStorageAccountName: 'test'
+        backendAzureRmContainerName: 'test'
+        backendAzureRmKey: 'test'
+    - task: TerraformTaskV4@4
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        environmentServiceNameAzureRM: 'MVP'
      
-# - stage: deploy_application
-#   displayName: Deploy application on AKS Cluster
-#   jobs:
-#   - job: deploy_application
-#     displayName: deploy nginx on aks
-#     steps:
-#     - task: Kubernetes@1
-#       displayName: create a nginx deployment with kubectl commands
-#       inputs:
-#         connectionType: 'Kubernetes Service Connection'
-#         kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
-#         namespace: 'default'
-#         command: 'apply'
-#         useConfigurationFile: true
-#         configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
-#         secretType: 'dockerRegistry'
-#         containerRegistryType: 'Azure Container Registry'
-- stage: trigger
-  displayName: Trigger application deployment pipeline
+- stage: deploy_application
+  displayName: Deploy application on AKS Cluster
   jobs:
   - job: deploy_application
-    displayName: trigger application pipeline
+    displayName: deploy nginx on aks
     steps:
     - task: Kubernetes@1
       displayName: create a nginx deployment with kubectl commands
@@ -109,6 +92,24 @@ stages:
         configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+
+# - stage: trigger
+#   displayName: Trigger application deployment pipeline
+#   jobs:
+#   - job: deploy_application
+#     displayName: trigger application pipeline
+#     steps:
+#     - task: Kubernetes@1
+#       displayName: create a nginx deployment with kubectl commands
+#       inputs:
+#         connectionType: 'Kubernetes Service Connection'
+#         kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
+#         namespace: 'default'
+#         command: 'apply'
+#         useConfigurationFile: true
+#         configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
+#         secretType: 'dockerRegistry'
+#         containerRegistryType: 'Azure Container Registry'
 
     # - task: PowerShell@2
     #   displayName: trigger azure devops rest api
