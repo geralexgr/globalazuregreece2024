@@ -18,10 +18,12 @@ stages:
   displayName: Deploy application on AKS Cluster
   jobs:
   - job: deploy_application
+     
     displayName: deploy nginx on aks
     steps:
     - task: Kubernetes@1
       displayName: create a nginx deployment with kubectl commands
+      retryCountOnTaskFailure: 1
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'Example-AKS'
