@@ -98,24 +98,25 @@ stages:
   - job: deploy_application
     displayName: trigger application pipeline
     steps:
-    # - task: Kubernetes@1
-    #   displayName: create a nginx deployment with kubectl commands
-    #   inputs:
-    #     connectionType: 'Kubernetes Service Connection'
-    #     kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
-    #     namespace: 'default'
-    #     command: 'apply'
-    #     useConfigurationFile: true
-    #     configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
-    #     secretType: 'dockerRegistry'
-    #     containerRegistryType: 'Azure Container Registry'
-    - task: PowerShell@2
-      displayName: trigger azure devops rest api
+    - task: Kubernetes@1
+      displayName: create a nginx deployment with kubectl commands
       inputs:
-        targetType: 'inline'
-        script: |
-          $connectionToken="$(PAT)"
-          $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($connectionToken)"))
-          $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=7.1-preview.1"
-          $Result = Invoke-RestMethod -Uri $URL -Headers @{authorization = "Basic $base64AuthInfo"} -Method Post -ContentType "application/json"
-        pwsh: true
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+
+    # - task: PowerShell@2
+    #   displayName: trigger azure devops rest api
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       $connectionToken="$(PAT)"
+    #       $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($connectionToken)"))
+    #       $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=7.1-preview.1"
+    #       $Result = Invoke-RestMethod -Uri $URL -Headers @{authorization = "Basic $base64AuthInfo"} -Method Post -ContentType "application/json"
+    #     pwsh: true
