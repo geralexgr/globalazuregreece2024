@@ -3,15 +3,17 @@ trigger:
 
 variables:
   - group: azuredevops
+  - name: serviceconnection
+    value: 'Example-AKS'
   
 pool:
   vmImage: ubuntu-latest
 
-parameters:
-- name: serviceconnection
-  displayName: Service Connection name
-  type: string
-  default: 'Example-AKS'
+# parameters:
+# - name: serviceconnection
+#   displayName: Service Connection name
+#   type: string
+#   default: 'Example-AKS'
 
 
 stages:
@@ -83,7 +85,7 @@ stages:
       displayName: create a nginx deployment with kubectl commands
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: ${{parameters.serviceconnection}}
+        kubernetesServiceEndpoint: ${{variables.serviceconnection}}
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
