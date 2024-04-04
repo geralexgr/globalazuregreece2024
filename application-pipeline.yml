@@ -3,12 +3,9 @@ pool:
 
 resources:
  pipelines:
-   - pipeline: DoesNotMatter
+   - pipeline: 'application-pipeline'
      source: "infra-pipeline"
-     trigger:
-      branches:
-       include:
-         - init
+     trigger: true
 
 
 stages:
