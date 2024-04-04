@@ -2,7 +2,7 @@
 resources:
   pipelines:
   - pipeline: application-deployment 
-    source: geralexgr.globalazuregreece2024
+    source: infrastructure-deployment
     trigger: 
       branches:  
         include: 
