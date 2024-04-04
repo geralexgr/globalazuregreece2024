@@ -18,7 +18,6 @@ stages:
   displayName: Deploy application on AKS Cluster
   jobs:
   - job: deploy_application
-     
     displayName: deploy nginx on aks
     steps:
     - task: Kubernetes@1
