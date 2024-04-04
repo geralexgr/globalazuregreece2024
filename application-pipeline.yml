@@ -2,7 +2,7 @@
 resources:
   pipelines:
   - pipeline: application-deployment 
-    source: infrastructure-deployment
+    source: "infrastructure-deployment"
     trigger: 
       branches:  
         include: 
