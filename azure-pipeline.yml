@@ -4,8 +4,6 @@ trigger:
 variables:
   - group: azuredevops
   
-  - name: k8s
-    value: 'Example-AKS'
 pool:
   vmImage: ubuntu-latest
 
@@ -45,15 +43,6 @@ stages:
   - job: deploy_serviceconnection
     displayName: terraform service connection creation
     steps:
-    - task: Bash@3
-      displayName: export env variables
-      inputs:
-        targetType: 'inline'
-        script: |          
-          export AZDO_PERSONAL_ACCESS_TOKEN=$(PAT)
-          export AZDO_ORG_SERVICE_URL=$(URL)
-
-
     - task: TerraformInstaller@1
       displayName: terraform install
       inputs:
@@ -78,20 +67,3 @@ stages:
         environmentServiceNameAzureRM: 'MVP'
      
 
-- stage: deploy_application
-  displayName: Deploy application on AKS Cluster
-  jobs:
-  - job: deploy_application
-    displayName: deploy nginx on aks
-    steps:
-    - task: Kubernetes@1
-      displayName: create a nginx deployment with kubectl commands
-      inputs:
-        connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: $(k8s)
-        namespace: 'default'
-        command: 'apply'
-        useConfigurationFile: true
-        configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
