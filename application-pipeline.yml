@@ -1,0 +1,33 @@
+
+resources:
+  pipelines:
+  - pipeline: application-deployment 
+    source: geralexgr.globalazuregreece2024
+    trigger: 
+      branches:  
+        include: 
+        - init
+        exclude: 
+        - develop
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: deploy_application
+  displayName: Deploy application on AKS Cluster
+  jobs:
+  - job: deploy_application
+    displayName: deploy nginx on aks
+    steps:
+    - task: Kubernetes@1
+      displayName: create a nginx deployment with kubectl commands
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'Example-AKS'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
