@@ -7,6 +7,13 @@ variables:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+- name: serviceconnection
+  displayName: Service Connection name
+  type: string
+  default: 'Example-AKS'
+
+
 stages:
 # - stage: deploy_aks
 #   displayName: Deploy AKS cluster
@@ -76,7 +83,7 @@ stages:
       displayName: create a nginx deployment with kubectl commands
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'Example-AKS'
+        kubernetesServiceEndpoint: ${{parameters.serviceconnection}}
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
