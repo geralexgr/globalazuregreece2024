@@ -85,7 +85,7 @@ stages:
       displayName: create a nginx deployment with kubectl commands
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: ${{variables.serviceconnection}}
+        kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
