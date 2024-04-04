@@ -48,7 +48,7 @@ resource "azuredevops_serviceendpoint_kubernetes" "aks" {
 
 
 resource "azuredevops_resource_authorization" "authorization" {
-  project_id  = azuredevops_project.project.id
+  project_id  = data.azuredevops_project.project.id
   resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
   authorized  = true
 }
