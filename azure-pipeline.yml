@@ -46,34 +46,34 @@ stages:
 #         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
 #         environmentServiceNameAzureRM: 'MVP'
 
-- stage: deploy_azuredevops
-  displayName: Deploy service connection for Azure DevOps
-  jobs:
-  - job: deploy_serviceconnection
-    displayName: terraform service connection creation
-    steps:
-    - task: TerraformInstaller@1
-      displayName: terraform install
-      inputs:
-        terraformVersion: 'latest'
-    - task: TerraformTaskV4@4
-      displayName: terraform init
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
-        backendServiceArm: 'MVP'
-        backendAzureRmResourceGroupName: 'test'
-        backendAzureRmStorageAccountName: 'test'
-        backendAzureRmContainerName: 'test'
-        backendAzureRmKey: 'test'
-    - task: TerraformTaskV4@4
-      displayName: terraform apply
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
-        environmentServiceNameAzureRM: 'MVP'
+# - stage: deploy_azuredevops
+#   displayName: Deploy service connection for Azure DevOps
+#   jobs:
+#   - job: deploy_serviceconnection
+#     displayName: terraform service connection creation
+#     steps:
+#     - task: TerraformInstaller@1
+#       displayName: terraform install
+#       inputs:
+#         terraformVersion: 'latest'
+#     - task: TerraformTaskV4@4
+#       displayName: terraform init
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'init'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+#         backendServiceArm: 'MVP'
+#         backendAzureRmResourceGroupName: 'test'
+#         backendAzureRmStorageAccountName: 'test'
+#         backendAzureRmContainerName: 'test'
+#         backendAzureRmKey: 'test'
+#     - task: TerraformTaskV4@4
+#       displayName: terraform apply
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'apply'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+#         environmentServiceNameAzureRM: 'MVP'
      
 # - stage: deploy_application
 #   displayName: Deploy application on AKS Cluster
@@ -117,6 +117,7 @@ stages:
           $connectionToken="$(PAT)"
           $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($connectionToken)"))
           $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=2.0"
-        
+          
           
           $Result = Invoke-RestMethod -Uri $URL -Headers @{authorization = "Basic $base64AuthInfo"} -Method Post -ContentType "application/json"
+        pwsh: true
