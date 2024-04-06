@@ -66,26 +66,9 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        commandOptions: '-var="org_service_url=$(URL)" -var="personal_access_token=$(PAT)"'
         environmentServiceNameAzureRM: 'MVP'
      
-# - stage: deploy_application
-#   displayName: Deploy application on AKS Cluster
-#   jobs:
-#   - job: deploy_application
-#     displayName: deploy nginx on aks
-#     steps:
-#     - task: Kubernetes@1
-#       displayName: create a nginx deployment with kubectl commands
-#       inputs:
-#         connectionType: 'Kubernetes Service Connection'
-#         kubernetesServiceEndpoint: $(SERVICECONNECTION_NAME)
-#         namespace: 'default'
-#         command: 'apply'
-#         useConfigurationFile: true
-#         configuration: '$(Build.SourcesDirectory)/code/nginx.yml'
-#         secretType: 'dockerRegistry'
-#         containerRegistryType: 'Azure Container Registry'
-
 # - stage: trigger
 #   displayName: Trigger application deployment pipeline
 #   jobs:
