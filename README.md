@@ -7,7 +7,7 @@ Global Azure Greece 2024 demo
 
 ## About
 
-In this demo a kubernetes application is deployed only with one click. Everything is performed through automation with terraform and azure devops pipelines.  
+In this demo a kubernetes application is deployed only with a couple of click. Everything is performed through automation with terraform and azure devops pipelines.  
 
 
 - The AKS cluster is deployed through terraform on Azure
