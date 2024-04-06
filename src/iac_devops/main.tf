@@ -17,8 +17,10 @@ provider "azurerm" {
 }
 
 provider "azuredevops" {
-  org_service_url = "https://dev.azure.com/gealexiou/"
-  personal_access_token ="ddfjk6zmlnckqo5j7yuemvw7hcnwc4kumnro2irsx46eupfw6oka"
+  # org_service_url = "https://dev.azure.com/gealexiou/"
+  # personal_access_token ="ddfjk6zmlnckqo5j7yuemvw7hcnwc4kumnro2irsx46eupfw6oka"
+  org_service_url       = var.org_service_url
+  personal_access_token = var.personal_access_token
 }
 
 data "azurerm_kubernetes_cluster" "cluster" {
