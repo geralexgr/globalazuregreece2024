@@ -69,19 +69,3 @@ stages:
         commandOptions: '-var="org_service_url=$(URL)" -var="personal_access_token=$(PAT)"'
         environmentServiceNameAzureRM: 'MVP'
      
-# - stage: trigger
-#   displayName: Trigger application deployment pipeline
-#   jobs:
-#   - job: deploy_application
-#     displayName: trigger application pipeline
-#     steps:
-    # - task: PowerShell@2
-    #   displayName: trigger azure devops rest api
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #       $connectionToken="$(PAT)"
-    #       $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($connectionToken)"))
-    #       $URL = "https://dev.azure.com/gealexiou/GlobalAzureGreece%202024/_apis/pipelines/19/runs?api-version=7.1-preview.1"
-    #       $Result = Invoke-RestMethod -Uri $URL -Headers @{authorization = "Basic $base64AuthInfo"} -Method Post -ContentType "application/json"
-    #     pwsh: true
