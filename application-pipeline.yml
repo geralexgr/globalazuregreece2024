@@ -1,6 +1,8 @@
 pool:
   vmImage: ubuntu-latest
 
+trigger: none
+
 stages:
 - stage: deploy_application
   displayName: Deploy application on AKS Cluster
