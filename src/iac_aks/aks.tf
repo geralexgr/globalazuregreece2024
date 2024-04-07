@@ -1,8 +1,6 @@
-
-
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
-  name     = "example-rg"
+  name     = var.resource_group_name
 }
 
 
@@ -10,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.rg.location
   name                = "geralexgr-cluster"
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "geralexgr-aks"
+  dns_prefix          = var.aks_name
 
   # Enable OIDC issuer and workload identity
   oidc_issuer_enabled       = true
@@ -23,7 +21,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   default_node_pool {
     name       = "agentpool"
-    vm_size    = "standard_dc2s_v2"
+    vm_size    = var.aks_node_size
     node_count = var.node_count
   }
   linux_profile {
