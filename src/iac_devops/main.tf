@@ -22,27 +22,27 @@ provider "azuredevops" {
 }
 
 data "azurerm_kubernetes_cluster" "cluster" {
-  name                = "geralexgr-cluster"
-  resource_group_name = "example-rg"
+  name                = var.aks_name
+  resource_group_name = var.resource_group_name
 }
 
 data "azuredevops_project" "project" {
-  name = "GlobalAzureGreece 2024"
+  name = var.azuredevops_project_name
 }
 
 resource "azuredevops_serviceendpoint_kubernetes" "aks" {
   project_id            = data.azuredevops_project.project.id
-  service_endpoint_name = "Example-AKS"
+  service_endpoint_name = var.serviceconnection_name
   apiserver_url         = data.azurerm_kubernetes_cluster.cluster.kube_config[0].host
   authorization_type    = "AzureSubscription"
 
   azure_subscription {
-    subscription_id   = "43709a15-a023-45e7-90a6-e30c5ffad83e"
-    subscription_name = "MVP"
-    tenant_id         = "4e6a568f-34d9-43a6-9c1f-32f6619147fd"
-    resourcegroup_id  = "example-rg"
+    subscription_id   = var.subscription_id
+    subscription_name = var.azure_subscription_name
+    tenant_id         = var.tenant_id
+    resourcegroup_id  = var.resource_group_name
     namespace         = "default"
-    cluster_name      = "geralexgr-cluster"
+    cluster_name      = var.aks_name
   }
 }
 
