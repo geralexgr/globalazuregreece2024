@@ -1,0 +1,72 @@
+trigger:
+- none
+
+variables:
+  - group: azuredevops
+  - name: serviceconnection
+    value: 'Example-AKS'
+  
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: deploy_aks
+  displayName: Deploy AKS cluster
+  jobs:
+  - job: terraform_aks_job
+    displayName: terraform AKS
+    steps:
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
+        backendServiceArm: 'MVP'
+        backendAzureRmResourceGroupName: 'test'
+        backendAzureRmStorageAccountName: 'test'
+        backendAzureRmContainerName: 'test'
+        backendAzureRmKey: 'test'
+    - task: TerraformTaskV4@4
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
+        commandOptions: '-var-file=values.tfvars'
+        environmentServiceNameAzureRM: 'MVP'
+
+- stage: deploy_azuredevops
+  displayName: Deploy service connection for Azure DevOps
+  jobs:
+  - job: deploy_serviceconnection
+    displayName: terraform service connection creation
+    steps:
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformTaskV4@4
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        backendServiceArm: 'MVP'
+        backendAzureRmResourceGroupName: 'test'
+        backendAzureRmStorageAccountName: 'test'
+        backendAzureRmContainerName: 'test'
+        backendAzureRmKey: 'test'
+    - task: TerraformTaskV4@4
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
+        commandOptions: '-var="org_service_url=$(URL)" -var="personal_access_token=$(PAT)" -var-file=values.tfvars'
+        environmentServiceNameAzureRM: 'MVP'
+     

@@ -1,0 +1,7 @@
+resource_group_name="example-rg"
+aks_name="geralexgr-cluster"
+azuredevops_project_name="GlobalAzureGreece 2024"
+serviceconnection_name="Example-AKS"
+subscription_id="43709a15-a023-45e7-90a6-e30c5ffad83e"
+tenant_id="4e6a568f-34d9-43a6-9c1f-32f6619147fd"
+azure_subscription_name="MVP"
