@@ -37,6 +37,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_aks'
+        commandOptions: '-var-file=values.tfvars'
         environmentServiceNameAzureRM: 'MVP'
 
 - stage: deploy_azuredevops
@@ -66,6 +67,6 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/src/iac_devops'
-        commandOptions: '-var="org_service_url=$(URL)" -var="personal_access_token=$(PAT)"'
+        commandOptions: '-var="org_service_url=$(URL)" -var="personal_access_token=$(PAT)" -var-file=values.tfvars'
         environmentServiceNameAzureRM: 'MVP'
      
