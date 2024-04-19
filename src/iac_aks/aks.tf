@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.rg.location
-  name                = "geralexgr-cluster"
+  name                = var.aks_name
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.aks_name
 
